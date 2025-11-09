@@ -1,0 +1,76 @@
+# Bytecode and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter and IPython
+.ipynb_checkpoints/
+*.ipynb
+
+# Build, distributions, and packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs and runtime
+logs/
+*.log
+*.out
+*.pid
+*.err
+*.tmp
+
+# Environment and secrets
+.env
+.env.*
+.envrc
+.secret*
+secrets.json
+config.yaml
+
+# Cache and test artifacts
+.cache/
+coverage/
+.coverage
+.coverage.*
+nosetests.xml
+pytest.xml
+htmlcov/
+
+# Editors and OS junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data and model artifacts
+models/
+*.pkl
+*.joblib
+*.h5
+*.ckpt
+*.meta.json
+data/
+datasets/

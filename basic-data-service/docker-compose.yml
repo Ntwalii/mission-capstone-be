@@ -1,0 +1,36 @@
+services:
+  basic-data-service:
+    build: .
+    ports:
+      - "4001:4001"
+    # Default: point to your Render DB (production)
+    environment:
+      DATABASE_URL: "postgresql://basicdatauser:AB3vv4djy0QYfnFj94ecoaNHcIDs9v54@dpg-d43jlo8dl3ps73a0c7ng-a.oregon-postgres.render.com/basicdataservice?sslmode=require"
+    restart: unless-stopped
+    # When you run with the "local" profile, this will wait for the local DB
+    depends_on:
+      basic:
+        condition: service_healthy
+        required: false  # ignored unless the "local" profile is active
+
+  # Local Postgres (only runs when you enable the "local" profile)
+  basic:
+    image: postgres:15
+    profiles: ["local"]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: backend1
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d backend1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:

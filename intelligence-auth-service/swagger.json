@@ -1,0 +1,133 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Authentication Service API",
+    "description": "API documentation for the Authentication and Authorization Service"
+  },
+  "host": "localhost:3000",
+  "basePath": "/auth",
+  "schemes": ["http"],               
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter: Bearer <token>"
+    }
+  },
+
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": { "type": "string" },
+                "password": { "type": "string" },
+                "email": { "type": "string" },
+                "full_name": { "type": "string" },
+                "job_position": { "type": "string" }
+              },
+              "required": ["username", "password", "email"]
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "Invalid input" },
+          "409": { "description": "Username or email already exists" },
+          "503": { "description": "Database unavailable" }
+        }
+      }
+    },
+
+    "/login": {
+      "post": {
+        "summary": "Login a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": { "type": "string" },
+                "password": { "type": "string" }
+              },
+              "required": ["email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": { "type": "string" }
+              }
+            }
+          },
+          "401": { "description": "Invalid credentials" },
+          "404": { "description": "User not found" },
+          "503": { "description": "Database unavailable" }
+        }
+      }
+    },
+
+"/validate": {
+  "get": {
+    "summary": "Validate a token and return user profile",
+    "description": "Provide the JWT via the `token` query parameter or the `Authorization: Bearer <token>` header. Returns user details if valid.",
+    "parameters": [
+      {
+        "name": "token",
+        "in": "query",
+        "required": false,
+        "type": "string",
+        "description": "JWT token. If omitted, the Authorization header will be used."
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Token is valid; user details returned",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer", "format": "int32" },
+            "username": { "type": "string" },
+            "email": { "type": "string" },
+            "full_name": { "type": "string" },
+            "role": { "type": "string" }
+          },
+          "required": ["id", "username"]
+        },
+        "examples": {
+          "application/json": {
+            "id": 5,
+            "username": "aubin",
+            "email": "aubin@example.com",
+            "full_name": "Aubin Ntwali",
+            "role": "analyst"
+          }
+        }
+      },
+      "401": { "description": "Invalid or missing token" },
+      "404": { "description": "User not found" }
+    }
+  }
+}
+
+  }
+}

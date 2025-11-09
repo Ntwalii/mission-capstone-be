@@ -1,0 +1,32 @@
+{
+  "name": "backend-service-1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend Service 1 for data management",
+  "main": "src/server.js",
+  "scripts": {
+    "prestart": "npx knex migrate:latest && npx knex seed:run",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "npx knex migrate:latest",
+    "rollback": "npx knex migrate:rollback",
+    "seed": "npx knex seed:run",
+    "etl:wits:sitc": "node etl/load_wits_sitc.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
+    "csv-parse": "^6.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.13.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
